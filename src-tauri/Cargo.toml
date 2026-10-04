@@ -1,0 +1,26 @@
+[package]
+name = "kisthenics-companion"
+version = "1.0.0"
+description = "Kisthenics Desktop Companion - Personalized Desktop Character Reminders"
+authors = ["Mohammed Jafran"]
+license = "MIT"
+repository = "https://github.com/MJ512/Kisthenics-Companion"
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.1", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+tauri = { version = "2.12.1", features = ["tray-icon"] }
+tauri-plugin-log = "2"
+chrono = { version = "0.4", features = ["serde"] }
+rusqlite = { version = "0.33", features = ["bundled"] }
+tauri-plugin-single-instance = "2"

@@ -1,0 +1,12 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "enables default permissions for main and reminder alert windows",
+  "windows": [
+    "main",
+    "reminder"
+  ],
+  "permissions": [
+    "core:default"
+  ]
+}

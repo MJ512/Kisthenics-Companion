@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Kisthenics Desktop Companion",
+  "version": "1.0.0",
+  "identifier": "com.kisthenics.companion",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Kisthenics Desktop Companion",
+        "width": 960,
+        "height": 720,
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true
+      },
+      {
+        "label": "reminder",
+        "title": "Reminder Alert",
+        "url": "index.html?mode=alert",
+        "width": 460,
+        "height": 540,
+        "resizable": false,
+        "transparent": true,
+        "decorations": false,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "visible": false,
+        "focus": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' 'unsafe-inline' data: blob: http: https:; img-src 'self' data: blob: asset: https://* http://*;"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "publisher": "Mohammed Jafran",
+    "copyright": "Copyright © 2026 Mohammed Jafran. All rights reserved.",
+    "shortDescription": "Personalized desktop companion that speaks your reminders with animated character emotions.",
+    "longDescription": "Kisthenics Desktop Companion is a cross-platform desktop companion featuring 12 expressive animated character personalities speaking your schedule directly from rounded speech bubbles at the edge of your screen.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

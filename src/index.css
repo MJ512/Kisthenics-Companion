@@ -1,0 +1,718 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   KISTHENICS COMPANION — DESIGN SYSTEM
+   Apple-inspired structure · Claude warm neutral palette
+   ============================================================ */
+
+@layer base {
+  /* ── LIGHT MODE TOKENS ── */
+  :root {
+    --color-background:      #F7F6F2;
+    --color-surface:         #FFFFFF;
+    --color-surface-soft:    #F1F0EB;
+    --color-surface-elevated:#FFFFFF;
+    --color-text-primary:    #2B2926;
+    --color-text-secondary:  #6F6B65;
+    --color-text-tertiary:   #9A958D;
+    --color-border:          #E4E1DB;
+    --color-divider:         #ECE9E3;
+    --color-primary:         #C15F3C;
+    --color-primary-hover:   #A94F31;
+    --color-primary-soft:    #F3DED5;
+    --color-primary-on:      #FFFFFF;
+    --color-success:         #3F8F68;
+    --color-success-soft:    #E6F4ED;
+    --color-warning:         #C58A35;
+    --color-warning-soft:    #FDF3E3;
+    --color-error:           #C85C54;
+    --color-error-soft:      #FCEAE9;
+
+    /* Bubble-specific */
+    --bubble-bg:             rgba(255, 255, 255, 0.97);
+    --bubble-border:         rgba(228, 225, 219, 0.9);
+    --bubble-shadow:         0 20px 48px -8px rgba(43, 41, 38, 0.14), 0 0 0 1px rgba(43, 41, 38, 0.06);
+    --bubble-tail-color:     rgba(255, 255, 255, 0.97);
+
+    /* Overlay */
+    --overlay-bg:            rgba(43, 41, 38, 0.55);
+  }
+
+  /* ── DARK MODE TOKENS ── */
+  .dark, [data-theme="dark"] {
+    --color-background:      #191817;
+    --color-surface:         #242220;
+    --color-surface-soft:    #1F1E1C;
+    --color-surface-elevated:#2C2A27;
+    --color-text-primary:    #F5F3EE;
+    --color-text-secondary:  #B7B2AA;
+    --color-text-tertiary:   #858078;
+    --color-border:          #3A3733;
+    --color-divider:         #302E2B;
+    --color-primary:         #D4754E;
+    --color-primary-hover:   #E0845E;
+    --color-primary-soft:    rgba(193, 95, 60, 0.18);
+    --color-primary-on:      #FFFFFF;
+    --color-success:         #4BA878;
+    --color-success-soft:    rgba(63, 143, 104, 0.15);
+    --color-warning:         #D4983E;
+    --color-warning-soft:    rgba(197, 138, 53, 0.15);
+    --color-error:           #D96E66;
+    --color-error-soft:      rgba(200, 92, 84, 0.15);
+
+    --bubble-bg:             rgba(36, 34, 32, 0.97);
+    --bubble-border:         rgba(255, 255, 255, 0.10);
+    --bubble-shadow:         0 24px 56px -8px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --bubble-tail-color:     rgba(36, 34, 32, 0.97);
+
+    --overlay-bg:            rgba(0, 0, 0, 0.65);
+  }
+
+  html, body, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent !important;
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+    /* Apple: system font stack with Inter fallback */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.47;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss03" 1;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+/* ============================================================
+   DESIGN TOKEN UTILITY SHORTHANDS
+   ============================================================ */
+@layer components {
+
+  /* ── Surfaces ── */
+  .surface {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+  }
+  .surface-soft {
+    background-color: var(--color-surface-soft);
+    color: var(--color-text-primary);
+  }
+  .surface-elevated {
+    background-color: var(--color-surface-elevated);
+    color: var(--color-text-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  /* ── Typography ── */
+  .text-display {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .text-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+  .text-headline {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .text-body {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.47;
+    letter-spacing: -0.008em;
+  }
+  .text-caption {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+  }
+  .text-micro {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+  }
+  .text-label {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-primary-on);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 130ms ease, transform 80ms ease;
+    outline: none;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+  .btn-primary:active {
+    transform: scale(0.96);
+  }
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background-color: transparent;
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background-color 130ms ease, border-color 130ms ease, transform 80ms ease;
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-surface-soft);
+    border-color: var(--color-text-tertiary);
+  }
+  .btn-secondary:active {
+    transform: scale(0.96);
+  }
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease, transform 80ms ease;
+  }
+  .btn-ghost:hover {
+    background-color: var(--color-surface-soft);
+    color: var(--color-text-primary);
+  }
+  .btn-ghost:active {
+    transform: scale(0.96);
+  }
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease, transform 80ms ease;
+    flex-shrink: 0;
+  }
+  .btn-icon:hover {
+    background-color: var(--color-surface-soft);
+    color: var(--color-text-primary);
+  }
+  .btn-icon:active {
+    transform: scale(0.92);
+  }
+  .btn-icon:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ── Settings Row ── */
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    gap: 16px;
+  }
+  .settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .settings-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    padding: 0 4px;
+    margin-bottom: 2px;
+  }
+
+  /* ── Input / Select ── */
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.4;
+    outline: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+    -webkit-appearance: none;
+  }
+  .form-input::placeholder {
+    color: var(--color-text-tertiary);
+  }
+  .form-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-soft);
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 150ms ease;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239A958D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+  .form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-soft);
+  }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid transparent;
+  }
+  .badge-primary {
+    background-color: var(--color-primary-soft);
+    color: var(--color-primary);
+    border-color: rgba(193, 95, 60, 0.2);
+  }
+  .badge-success {
+    background-color: var(--color-success-soft);
+    color: var(--color-success);
+  }
+  .badge-warning {
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning);
+  }
+  .badge-error {
+    background-color: var(--color-error-soft);
+    color: var(--color-error);
+  }
+  .badge-muted {
+    background-color: var(--color-surface-soft);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+  }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background-color: var(--color-divider);
+    border: none;
+    margin: 0;
+  }
+
+  /* ── Toggle Switch (replaces checkbox) ── */
+  .toggle {
+    position: relative;
+    width: 44px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-border);
+    border-radius: 9999px;
+    transition: background-color 200ms ease;
+    cursor: pointer;
+  }
+  .toggle input:checked ~ .toggle-track {
+    background-color: var(--color-primary);
+  }
+  .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background-color: #FFFFFF;
+    border-radius: 9999px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    transition: transform 200ms ease;
+    pointer-events: none;
+  }
+  .toggle input:checked ~ .toggle-track ~ .toggle-thumb,
+  .toggle input:checked + .toggle-track + .toggle-thumb {
+    transform: translateX(18px);
+  }
+
+  /* workaround: sibling can't be targeted from input in same parent easily */
+  .toggle:has(input:checked) .toggle-track {
+    background-color: var(--color-primary);
+  }
+  .toggle:has(input:checked) .toggle-thumb {
+    transform: translateX(18px);
+  }
+  .toggle input:focus-visible ~ .toggle-track {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .card-hover {
+    transition: border-color 150ms ease, box-shadow 150ms ease, transform 120ms ease;
+  }
+  .card-hover:hover {
+    border-color: var(--color-text-tertiary);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  /* ── Pill Tab ── */
+  .tab-pill {
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color 130ms ease, color 130ms ease;
+    border: none;
+    background: transparent;
+  }
+  .tab-pill.active,
+  .tab-pill[aria-selected="true"] {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 0 0 1px var(--color-border);
+  }
+  .tab-pill:hover:not(.active):not([aria-selected="true"]) {
+    background-color: var(--color-surface-soft);
+    color: var(--color-text-primary);
+  }
+
+  /* ── Empty State ── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 48px 32px;
+    gap: 12px;
+    color: var(--color-text-tertiary);
+  }
+}
+
+/* ============================================================
+   SPEECH BUBBLE TAIL
+   ============================================================ */
+.speech-bubble-tail {
+  position: absolute;
+  bottom: -14px;
+  right: 72px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 15px solid var(--bubble-tail-color);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.10));
+}
+
+/* ============================================================
+   POPUP ENTRANCE ANIMATIONS
+   ============================================================ */
+@keyframes bubbleEntranceSpring {
+  0%   { opacity: 0; transform: translateY(44px) scale(0.95); }
+  60%  { opacity: 1; transform: translateY(-5px) scale(1.012); }
+  80%  { transform: translateY(2px) scale(0.996); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popupExitDown {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(48px) translateX(16px) scale(0.93); }
+}
+
+/* 12 emotion-specific character entrances */
+@keyframes animLaughBounce {
+  0%   { opacity: 0; transform: translateY(60px) scale(0.88) rotate(-3deg); }
+  50%  { opacity: 1; transform: translateY(-12px) scale(1.07) rotate(2deg); }
+  75%  { transform: translateY(4px) scale(0.98) rotate(-0.5deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+@keyframes animCoolGlide {
+  0%   { opacity: 0; transform: translateY(44px) translateX(22px); }
+  70%  { opacity: 1; transform: translateY(-3px) translateX(-1px); }
+  100% { opacity: 1; transform: translateY(0) translateX(0); }
+}
+@keyframes animDeterminedUp {
+  0%   { opacity: 0; transform: translateY(72px) scale(0.92); }
+  55%  { opacity: 1; transform: translateY(-14px) scale(1.06); }
+  80%  { transform: translateY(3px) scale(0.99); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes animShockPop {
+  0%   { opacity: 0; transform: translateY(48px) scale(0.72) rotate(4deg); }
+  60%  { opacity: 1; transform: translateY(-10px) scale(1.09) rotate(-2deg); }
+  80%  { transform: translateY(3px) scale(0.98) rotate(0.5deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+@keyframes animAngryShake {
+  0%   { opacity: 0; transform: translateY(68px) scale(1.12); }
+  45%  { opacity: 1; transform: translateY(0) scale(0.96); }
+  60%  { transform: translateY(-7px) translateX(-3px) scale(1.02); }
+  75%  { transform: translateY(2px) translateX(2px) scale(0.99); }
+  100% { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+}
+@keyframes animSleepyDrift {
+  0%   { opacity: 0; transform: translateY(38px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes animThumbsBounce {
+  0%   { opacity: 0; transform: translateY(52px) scale(0.90); }
+  60%  { opacity: 1; transform: translateY(-9px) scale(1.05); }
+  80%  { transform: translateY(3px) scale(0.99); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes animCoolApproval {
+  0%   { opacity: 0; transform: translateY(48px) translateX(14px) scale(0.94); }
+  70%  { opacity: 1; transform: translateY(-5px) translateX(-2px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+}
+@keyframes animLoveFloat {
+  0%   { opacity: 0; transform: translateY(48px) scale(0.85); }
+  50%  { opacity: 1; transform: translateY(-7px) scale(1.05); }
+  75%  { transform: translateY(2px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes animCrySlow {
+  0%   { opacity: 0; transform: translateY(44px) scale(0.90); }
+  65%  { opacity: 1; transform: translateY(-4px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes animCuriousTilt {
+  0%   { opacity: 0; transform: translateY(48px) scale(0.92) rotate(-6deg); }
+  65%  { opacity: 1; transform: translateY(-7px) scale(1.03) rotate(3.5deg); }
+  85%  { transform: translateY(2px) scale(0.99) rotate(-0.5deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+@keyframes animSilentFade {
+  0%   { opacity: 0; transform: translateY(22px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Gentle idle breathing */
+@keyframes gentleBreathing {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-3px) scale(1.010); }
+}
+
+/* Slide up from off-screen for modal overlays */
+@keyframes slideUpFade {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ============================================================
+   ANIMATION UTILITY CLASSES
+   ============================================================ */
+.anim-bubble-spring      { animation: bubbleEntranceSpring 0.50s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards; }
+.anim-popup-exit         { animation: popupExitDown 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+.anim-char-laugh-bounce  { animation: animLaughBounce   0.56s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+.anim-char-cool-glide    { animation: animCoolGlide     0.50s cubic-bezier(0.16, 1, 0.3, 1)           forwards; }
+.anim-char-determined-up { animation: animDeterminedUp  0.58s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+.anim-char-shock-pop     { animation: animShockPop      0.46s cubic-bezier(0.34, 1.56, 0.64, 1)       forwards; }
+.anim-char-angry-shake   { animation: animAngryShake    0.52s cubic-bezier(0.22, 1, 0.36, 1)          forwards; }
+.anim-char-sleepy-drift  { animation: animSleepyDrift   0.66s cubic-bezier(0.25, 1, 0.5, 1)           forwards; }
+.anim-char-thumbs-bounce { animation: animThumbsBounce  0.50s cubic-bezier(0.175, 0.885, 0.32, 1.25)  forwards; }
+.anim-char-cool-approval { animation: animCoolApproval  0.53s cubic-bezier(0.16, 1, 0.3, 1)           forwards; }
+.anim-char-love-float    { animation: animLoveFloat     0.56s cubic-bezier(0.175, 0.885, 0.32, 1.2)   forwards; }
+.anim-char-cry-slow      { animation: animCrySlow       0.62s cubic-bezier(0.25, 1, 0.5, 1)           forwards; }
+.anim-char-curious-tilt  { animation: animCuriousTilt   0.54s cubic-bezier(0.175, 0.885, 0.32, 1.25)  forwards; }
+.anim-char-silent-fade   { animation: animSilentFade    0.62s ease-out                                 forwards; }
+.anim-idle-breathing     { animation: gentleBreathing   3.8s ease-in-out infinite; }
+.anim-modal-enter        { animation: slideUpFade       0.22s cubic-bezier(0.16, 1, 0.3, 1)           forwards; }
+
+/* ============================================================
+   SCROLLBAR — Minimal warm neutral
+   ============================================================ */
+.bubble-scroll::-webkit-scrollbar,
+.modal-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.bubble-scroll::-webkit-scrollbar-track,
+.modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.bubble-scroll::-webkit-scrollbar-thumb,
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+.bubble-scroll::-webkit-scrollbar-thumb:hover,
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* ============================================================
+   MAIN APP SHELL
+   ============================================================ */
+.app-shell {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ============================================================
+   OVERLAY MODAL BACKDROP
+   ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: var(--overlay-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ============================================================
+   CHARACTER GRID SELECTION
+   ============================================================ */
+.char-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 6px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-border);
+  background-color: var(--color-surface);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 120ms ease, box-shadow 150ms ease;
+  gap: 4px;
+}
+.char-card:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+.char-card.selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  box-shadow: 0 0 0 3px rgba(193, 95, 60, 0.18);
+}
+.char-card:active {
+  transform: scale(0.96);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
