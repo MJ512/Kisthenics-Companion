@@ -32,9 +32,9 @@ interface MainDashboardProps {
 
 const priorityDot: Record<string, string> = {
   urgent: 'bg-[var(--color-error)]',
-  high:   'bg-[var(--color-warning)]',
+  high: 'bg-[var(--color-warning)]',
   medium: 'bg-[var(--color-primary)]',
-  low:    'bg-[var(--color-text-tertiary)]',
+  low: 'bg-[var(--color-text-tertiary)]',
 };
 
 type TabId = 'today' | 'upcoming' | 'completed' | 'all';
@@ -58,8 +58,8 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
   const todayStr = new Date().toISOString().split('T')[0];
 
   const filteredReminders = safeReminders.filter((rem) => {
-    if (activeTab === 'today')     return rem.status !== 'completed' && rem.date === todayStr;
-    if (activeTab === 'upcoming')  return rem.status !== 'completed' && rem.date >= todayStr;
+    if (activeTab === 'today') return rem.status !== 'completed' && rem.date === todayStr;
+    if (activeTab === 'upcoming') return rem.status !== 'completed' && rem.date >= todayStr;
     if (activeTab === 'completed') return rem.status === 'completed';
     return true;
   });
@@ -78,15 +78,15 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
   const pendingCount = safeReminders.filter((r) => r.status === 'pending').length;
 
   const tabs: { id: TabId; label: string; count?: number }[] = [
-    { id: 'today',     label: 'Today',        count: safeReminders.filter(r => r.status !== 'completed' && r.date === todayStr).length },
-    { id: 'upcoming',  label: 'Upcoming',     count: safeReminders.filter(r => r.status !== 'completed' && r.date >= todayStr).length },
-    { id: 'completed', label: 'Completed',    count: safeReminders.filter(r => r.status === 'completed').length },
-    { id: 'all',       label: 'All' },
+    { id: 'today', label: 'Today', count: safeReminders.filter(r => r.status !== 'completed' && r.date === todayStr).length },
+    { id: 'upcoming', label: 'Upcoming', count: safeReminders.filter(r => r.status !== 'completed' && r.date >= todayStr).length },
+    { id: 'completed', label: 'Completed', count: safeReminders.filter(r => r.status === 'completed').length },
+    { id: 'all', label: 'All' },
   ];
 
   return (
     <div
-      className="app-shell flex flex-col select-none overflow-hidden"
+      className="flex-1 min-h-0 flex flex-col select-none overflow-hidden"
       style={{ background: 'var(--color-background)', color: 'var(--color-text-primary)' }}
     >
       {/* ── HEADER ── */}
@@ -178,7 +178,7 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
 
       {/* ── TAB BAR ── */}
       <div
-        className="px-6 pt-3 pb-0 shrink-0"
+        className="px-6 pt-3 pb-3 shrink-0"
         style={{ borderBottom: '1px solid var(--color-divider)' }}
       >
         <div

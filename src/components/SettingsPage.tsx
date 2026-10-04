@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CompanionSettings } from '../types';
 import { ArrowLeft, Check, Volume2 } from 'lucide-react';
 import { playCompanionSound } from '../utils/audio';
+import { applyTheme } from '../App';
 
 interface SettingsPageProps {
   settings: CompanionSettings;
@@ -25,13 +26,6 @@ function Toggle({
     <label
       htmlFor={id}
       className="toggle"
-      style={{
-        cursor: 'pointer',
-        position: 'relative',
-        display: 'inline-block',
-        width: 44,
-        height: 24,
-      }}
       aria-label={label || id}
     >
       <input
@@ -39,31 +33,17 @@ function Toggle({
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
       />
       <div
         className="toggle-track"
         style={{
-          position: 'absolute',
-          inset: 0,
-          borderRadius: 9999,
           background: checked ? 'var(--color-primary)' : 'var(--color-border)',
-          transition: 'background 200ms cubic-bezier(0.32, 0.72, 0, 1)',
         }}
       />
       <div
         className="toggle-thumb"
         style={{
-          position: 'absolute',
-          top: 2,
-          left: checked ? 22 : 2,
-          width: 20,
-          height: 20,
-          background: '#FFFFFF',
-          borderRadius: 9999,
-          boxShadow: '0 2px 4px rgba(0,0,0,0.20)',
-          transition: 'left 200ms cubic-bezier(0.32, 0.72, 0, 1)',
-          pointerEvents: 'none',
+          transform: checked ? 'translateX(20px)' : 'translateX(0)',
         }}
       />
     </label>
@@ -183,7 +163,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
 
   return (
     <div
-      className="flex flex-col h-full w-full select-none"
+      className="flex flex-col flex-1 min-h-0 w-full select-none overflow-hidden"
       style={{
         background: 'var(--color-background)',
         color: 'var(--color-text-primary)',
@@ -255,10 +235,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
 
       {/* ── SCROLLABLE SETTINGS CONTENT ── */}
       <main
-        className="flex-1 overflow-y-auto modal-scroll px-6 py-6"
+        className="flex-1 min-h-0 overflow-y-auto modal-scroll px-6 py-6"
         style={{
           display: 'flex',
           justifyContent: 'center',
+          paddingBottom: '64px',
         }}
       >
         <div style={{ width: '100%', maxWidth: 580 }}>
@@ -297,12 +278,13 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
                     <button
                       key={t.id}
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
                         setCurrent({
                           ...current,
                           appearance: { ...current.appearance, theme: t.id },
-                        })
-                      }
+                        });
+                        applyTheme(t.id);
+                      }}
                       style={{
                         padding: '9px 0',
                         borderRadius: 9,
@@ -419,7 +401,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => playCompanionSound('chime', current.notifications.soundVolume)}
+                      onClick={() => playCompanionSound('kadinama-irunga', current.notifications.soundVolume)}
                       className="btn-ghost"
                       style={{ padding: '2px 8px', fontSize: '11px', borderRadius: 4 }}
                     >
@@ -491,7 +473,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
 
           {/* ── 4. ACCESSIBILITY ── */}
           <SectionHeader title="4. Accessibility" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 40 }}>
             <SettingsRow
               label="Reduced motion"
               description="Minimize spring animations and dynamic character movements"
@@ -509,6 +491,9 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
               />
             </SettingsRow>
           </div>
+
+          {/* Generous bottom breather margin */}
+          <div style={{ height: 48 }} />
 
         </div>
       </main>

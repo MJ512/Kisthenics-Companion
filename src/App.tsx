@@ -6,20 +6,24 @@ import { DesktopReminderPopup } from './components/DesktopReminderPopup';
 import { NewReminderModal } from './components/NewReminderModal';
 import { SettingsPage } from './components/SettingsPage';
 import { CharacterRosterModal } from './components/CharacterRosterModal';
+import { TitleBar } from './components/TitleBar';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-// Apply theme class to <html> so CSS vars switch cleanly
-function applyTheme(theme: 'dark' | 'light' | 'system') {
+// Apply theme class to <html> and <body> so CSS vars switch cleanly across platforms
+export function applyTheme(theme: 'dark' | 'light' | 'system') {
   const root = document.documentElement;
-  if (theme === 'dark') {
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  if (isDark) {
     root.classList.add('dark');
-  } else if (theme === 'light') {
-    root.classList.remove('dark');
+    root.setAttribute('data-theme', 'dark');
+    document.body?.classList.add('dark');
   } else {
-    // system
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark) root.classList.add('dark');
-    else root.classList.remove('dark');
+    root.classList.remove('dark');
+    root.setAttribute('data-theme', 'light');
+    document.body?.classList.remove('dark');
   }
 }
 
@@ -348,6 +352,7 @@ export const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <div className="app-shell">
+        <TitleBar />
         {currentView === 'settings' ? (
           <SettingsPage
             settings={settings}
