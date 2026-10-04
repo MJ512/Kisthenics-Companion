@@ -3,6 +3,7 @@ import { Reminder, CharacterAsset, RecurrenceType, PriorityLevel } from '../type
 import { CHARACTER_CATALOG, inferCharacterForContext } from '../utils/characterRegistry';
 import { formatTime } from '../utils/dateTime';
 import { Time12Picker } from './Time12Picker';
+import { NOTIFICATION_SOUNDS, playCompanionSound } from '../utils/audio';
 import { X, Clock, Calendar, Repeat, Check, Wand2, Volume2, Timer, Sparkles } from 'lucide-react';
 
 interface NewReminderModalProps {
@@ -57,7 +58,7 @@ export const NewReminderModal: React.FC<NewReminderModalProps> = ({
   const [recurrence, setRecurrence] = useState<RecurrenceType>('once');
   const [priority, setPriority] = useState<PriorityLevel>('medium');
   const [category, setCategory] = useState('General');
-  const [soundType, setSoundType] = useState<string>('default');
+  const [soundType, setSoundType] = useState<string>('kadinama-irunga');
   const [durationSeconds, setDurationSeconds] = useState<number>(0);
 
   useEffect(() => {
@@ -75,7 +76,7 @@ export const NewReminderModal: React.FC<NewReminderModalProps> = ({
       setRecurrence(initialReminder.recurrence);
       setPriority(initialReminder.priority);
       setCategory(initialReminder.category || 'General');
-      setSoundType(initialReminder.soundType || 'default');
+      setSoundType(initialReminder.soundType || 'kadinama-irunga');
       setDurationSeconds(initialReminder.durationSeconds || 0);
     } else {
       setTitle('');
@@ -87,7 +88,7 @@ export const NewReminderModal: React.FC<NewReminderModalProps> = ({
       setRecurrence('once');
       setPriority('medium');
       setCategory('General');
-      setSoundType('default');
+      setSoundType('kadinama-irunga');
       setDurationSeconds(0);
     }
   }, [initialReminder, isOpen]);
@@ -123,7 +124,7 @@ export const NewReminderModal: React.FC<NewReminderModalProps> = ({
       snoozeCount: initialReminder?.snoozeCount || 0,
       createdAt: initialReminder?.createdAt || Date.now(),
       category,
-      soundType: soundType === 'default' ? undefined : soundType,
+      soundType,
       durationSeconds: Number(durationSeconds) || 0,
     };
 
@@ -361,14 +362,29 @@ export const NewReminderModal: React.FC<NewReminderModalProps> = ({
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
               <div>
                 <FieldLabel icon={Volume2}>Alert sound</FieldLabel>
-                <select value={soundType} onChange={(e) => setSoundType(e.target.value)} style={selectStyle}>
-                  <option value="default">Companion default</option>
-                  <option value="chime">Bell chime</option>
-                  <option value="playful">Playful arpeggio</option>
-                  <option value="motivational">Motivational</option>
-                  <option value="gentle">Gentle ambient</option>
-                  <option value="alert">Radar ping</option>
-                  <option value="urgent">Urgency ping</option>
+                <select
+                  value={soundType}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setSoundType(val);
+                    playCompanionSound(val);
+                  }}
+                  style={selectStyle}
+                >
+                  <optgroup label="Notification Sounds">
+                    {NOTIFICATION_SOUNDS.filter((s) => s.group === 'main').map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Others">
+                    {NOTIFICATION_SOUNDS.filter((s) => s.group === 'others').map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
               <div>
