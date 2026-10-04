@@ -66,6 +66,121 @@ export function format12To24(
 }
 
 /**
+ * Validates whether a time string is a valid machine 24-hour time "HH:mm" (00:00 to 23:59).
+ */
+export function isValidTime24(time24?: string | null): boolean {
+  if (!time24 || typeof time24 !== 'string') return false;
+  const parts = time24.trim().split(':');
+  if (parts.length !== 2) return false;
+  const h = Number(parts[0]);
+  const m = Number(parts[1]);
+  if (!Number.isInteger(h) || !Number.isInteger(m)) return false;
+  return h >= 0 && h <= 23 && m >= 0 && m <= 59 && parts[0].length <= 2 && parts[1].length === 2;
+}
+
+/**
+ * Validates whether a 12-hour component is between 1 and 12.
+ */
+export function isValidHour12(h: string | number): boolean {
+  const num = typeof h === 'string' ? parseInt(h, 10) : h;
+  return Number.isInteger(num) && num >= 1 && num <= 12;
+}
+
+/**
+ * Validates whether a minute component is between 0 and 59.
+ */
+export function isValidMinute(m: string | number): boolean {
+  const num = typeof m === 'string' ? parseInt(m, 10) : m;
+  return Number.isInteger(num) && num >= 0 && num <= 59;
+}
+
+/**
+ * Parses free-form natural time input into structured 12-hour parts and 24-hour time string.
+ * Supports:
+ * - "5:30 PM", "5:30pm", "05:30 PM", "5:30p"
+ * - "530pm", "0530 PM", "1145am"
+ * - "5 PM", "5pm", "12 AM"
+ * - "17:30", "08:05", "00:00"
+ */
+export function parseNaturalTime(
+  raw?: string | null
+): { hour: string; minute: string; period: 'AM' | 'PM'; time24: string } | null {
+  if (!raw || typeof raw !== 'string') return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  // Case 1: Standard 24h format "HH:mm" (e.g. "17:30", "08:05", "00:00")
+  if (/^([01]?\d|2[0-3]):[0-5]\d$/.test(trimmed)) {
+    const parts = parse24To12(trimmed);
+    const time24 = format12To24(parts.hour, parts.minute, parts.period);
+    return { ...parts, time24 };
+  }
+
+  // Case 2: 12h format with colon "H:mm AM/PM" or "HH:mmAM"
+  const m12WithColon = trimmed.match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*([aApP][mM]?)?$/i);
+  if (m12WithColon) {
+    const h = parseInt(m12WithColon[1], 10);
+    const m = parseInt(m12WithColon[2], 10);
+    const pStr = m12WithColon[3];
+    if (m >= 0 && m <= 59) {
+      if (pStr) {
+        const period: 'AM' | 'PM' = pStr.toUpperCase().startsWith('A') ? 'AM' : 'PM';
+        if (h >= 1 && h <= 12) {
+          const hour = String(h).padStart(2, '0');
+          const minute = String(m).padStart(2, '0');
+          return { hour, minute, period, time24: format12To24(hour, minute, period) };
+        }
+      } else {
+        // No AM/PM specified: if h <= 23, treat as 24-hour time
+        if (h >= 0 && h <= 23) {
+          const time24 = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+          const parts = parse24To12(time24);
+          return { ...parts, time24 };
+        }
+      }
+    }
+  }
+
+  // Case 3: Compact digits with AM/PM (e.g. "530pm", "0530 PM", "1145am")
+  const mCompact = trimmed.match(/^(\d{3,4})\s*([aApP][mM]?)?$/i);
+  if (mCompact) {
+    const digits = mCompact[1];
+    const h = digits.length === 3 ? parseInt(digits.slice(0, 1), 10) : parseInt(digits.slice(0, 2), 10);
+    const m = parseInt(digits.slice(-2), 10);
+    const pStr = mCompact[2];
+    if (m >= 0 && m <= 59) {
+      if (pStr) {
+        const period: 'AM' | 'PM' = pStr.toUpperCase().startsWith('A') ? 'AM' : 'PM';
+        if (h >= 1 && h <= 12) {
+          const hour = String(h).padStart(2, '0');
+          const minute = String(m).padStart(2, '0');
+          return { hour, minute, period, time24: format12To24(hour, minute, period) };
+        }
+      } else if (h >= 0 && h <= 23) {
+        const time24 = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        const parts = parse24To12(time24);
+        return { ...parts, time24 };
+      }
+    }
+  }
+
+  // Case 4: Hour only with AM/PM (e.g. "5pm", "5 PM", "12 AM")
+  const mHourOnly = trimmed.match(/^(\d{1,2})\s*([aApP][mM]?)$/i);
+  if (mHourOnly) {
+    const h = parseInt(mHourOnly[1], 10);
+    const pStr = mHourOnly[2];
+    const period: 'AM' | 'PM' = pStr.toUpperCase().startsWith('A') ? 'AM' : 'PM';
+    if (h >= 1 && h <= 12) {
+      const hour = String(h).padStart(2, '0');
+      const minute = '00';
+      return { hour, minute, period, time24: format12To24(hour, minute, period) };
+    }
+  }
+
+  return null;
+}
+
+/**
  * Formats a time value into a clean 12-hour display string with AM/PM (e.g., "08:30 PM", "09:05 AM").
  * Handles:
  * - "HH:mm" strings (e.g. "20:30" -> "08:30 PM", "09:05" -> "09:05 AM")

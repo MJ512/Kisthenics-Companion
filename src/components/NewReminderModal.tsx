@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Reminder, CharacterAsset, RecurrenceType, PriorityLevel } from '../types';
 import { CHARACTER_CATALOG, inferCharacterForContext } from '../utils/characterRegistry';
-import { formatTime } from '../utils/dateTime';
+import { formatTime, isValidTime24 } from '../utils/dateTime';
 import { Time12Picker } from './Time12Picker';
 import { NOTIFICATION_SOUNDS, playCompanionSound } from '../utils/audio';
 import { X, Clock, Calendar, Repeat, Check, Wand2, Volume2, Timer, Sparkles } from 'lucide-react';
@@ -594,7 +594,7 @@ export const NewReminderModal: React.FC<NewReminderModalProps> = ({
             <button
               type="submit"
               className="btn-primary"
-              disabled={!title.trim()}
+              disabled={!title.trim() || !isValidTime24(time)}
               style={{ fontSize: '13px', padding: '9px 20px' }}
             >
               <Check size={13} strokeWidth={2.5} />
