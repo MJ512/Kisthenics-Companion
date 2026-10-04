@@ -1,11 +1,27 @@
-# Kisthenics Companion
+<p align="center">
 
+
+
+<div align="center">
+<h1>Kisthenics Companion</h1>
+<br />
+<a href="https://github.com/MJ512/Kisthenics-Companion/releases/download/beta/Kisthenics.Desktop.Companion_1.0.0_aarch64.dmg"><img src="https://iili.io/nlLKDuV.png" width="250px"></a>
+<a href="https://github.com/MJ512/Kisthenics-Companion/releases/download/beta/kisthenics-companion.exe"><img src="https://iili.io/nlLKZyQ.png" width="250px"></a>
+</div>
+
+<div align="center">
+<img src="https://iili.io/nlLoKQV.png">
+         
+    
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Tauri 2](https://img.shields.io/badge/Tauri-v2-24C8DB.svg?logo=tauri)](https://tauri.app)
 [![React 19](https://img.shields.io/badge/React-v19-61DAFB.svg?logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6.svg?logo=typescript)](https://www.typescriptlang.org)
 [![Rust](https://img.shields.io/badge/Rust-1.78+-DEA584.svg?logo=rust)](https://www.rust-lang.org)
+</div>
 
+</p>
+<br />
 **Kisthenics Companion** is an open-source, local-first desktop reminder application that pairs your daily schedule with expressive animated character personalities.
 
 Instead of generic notification toasts, Kisthenics Companion introduces a dedicated, transparent desktop alert window featuring emotional character artwork and frosted speech bubbles that slide seamlessly into view.
