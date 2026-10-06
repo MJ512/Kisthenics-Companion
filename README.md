@@ -5,7 +5,7 @@
 <div align="center">
 <h1>Kisthenics Companion</h1>
 <br />
-<a href="https://github.com/MJ512/Kisthenics-Companion/releases/download/beta/Kisthenics.Desktop.Companion_1.0.0_aarch64.dmg"><img src="https://iili.io/nlLKDuV.png" width="250px"></a>
+<a href="https://github.com/MJ512/Kisthenics-Companion/releases/download/beta/Kisthenics.Desktop.Companion_1.0.0_aarch64.1.dmg"><img src="https://iili.io/nlLKDuV.png" width="250px"></a>
 <a href="https://github.com/MJ512/Kisthenics-Companion/releases/download/beta/kisthenics-companion.exe"><img src="https://iili.io/nlLKZyQ.png" width="250px"></a>
 </div>
 
